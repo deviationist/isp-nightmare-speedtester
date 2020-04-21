@@ -18,7 +18,8 @@ Also run ```composer install``` in the project root to pull in PHP dependencies.
 
 ### Cron setup
 The command below will run every 15 minute:<br>
-```*/15 * * * * /path/to/speedtest.sh >> /path/to/speedtest.log```
+```*/15 * * * * /path/to/speedtest.sh >> /path/to/speedtest.log```<br>
+Use https://crontab.guru/ if you are unsure about how to specify the time in the crontab.
 
 ### Display statistics
 The results can be seen by executing the following PHP-file via the CLI:
