@@ -21,6 +21,7 @@ Copy ".env.example" to ".env" and specify the log file path.
 ### Cron setup
 The command below will run every 15 minute:<br>
 ```*/15 * * * * /path/to/speedtest.sh >> /path/to/speedtest.log```<br>
+Make sure that the bash-script is executable by running ```chmod +x speedtest.sh```.<br>
 Use https://crontab.guru/ if you are unsure about how to specify the time in the crontab.
 
 ### Display statistics
