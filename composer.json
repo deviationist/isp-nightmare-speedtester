@@ -1,5 +1,6 @@
 {
     "require": {
-        "phplucidframe/console-table": "^1.2"
+        "phplucidframe/console-table": "^1.2",
+        "vlucas/phpdotenv": "^4.1"
     }
 }

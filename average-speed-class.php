@@ -6,39 +6,53 @@
 class Average_Speed {
 
 	/**
+	 * The string used to separate log file items.
+	 *
 	 * @var string
 	 */
 	private $item_separator = '--------------------------';
 
 	/**
+	 * Property to store log file items.
+	 *
 	 * @var null
 	 */
 	private $items = null;
 
 	/**
+	 * Log file path.
+	 *
 	 * @var null
 	 */
 	private $file_path = null;
 
 	/**
+	 * Log file content.
+	 *
 	 * @var null
 	 */
 	private $file_content = null;
 
 	/**
+	 * By hour statistics property.
+	 *
 	 * @var array
 	 */
-	private $by_hour    = [];
+	private $by_hour = [];
 
 	/**
+	 * By weekday statistics property.
+	 *
 	 * @var array
 	 */
 	private $by_weekday = [];
 
 	/**
+	 * Server list.
+	 *
 	 * @var array
 	 */
-	private $servers    = [];
+	private $servers = [];
 
 	/**
 	 * Average_Speed constructor.
@@ -47,13 +61,16 @@ class Average_Speed {
 	 */
 	public function __construct($file_path) {
 		$this->file_path = $file_path;
-		$this->read_file();
+		if ( ! $this->read_file() ) {
+			return false;
+		}
 		$this->separate_items();
 		$this->parse_items();
+		return true;
 	}
 
 	/**
-	 *
+	 * Separate the log file items into array.
 	 */
 	private function separate_items() {
 		$items = explode($this->item_separator, $this->file_content);
@@ -64,13 +81,17 @@ class Average_Speed {
 	}
 
 	/**
-	 *
+	 * Read the log file.
 	 */
 	private function read_file() {
+		if ( ! file_exists($this->file_path) || ! is_readable($this->file_path) ) return false;
 		$this->file_content = file_get_contents($this->file_path);
+		return true;
 	}
 
 	/**
+	 * Parse the datetime from log file item.
+	 *
 	 * @param $item
 	 *
 	 * @return DateTime
@@ -87,6 +108,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Parse download speed from log item.
+	 *
 	 * @param $item
 	 *
 	 * @return float
@@ -97,6 +120,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Parse upload speed from log item.
+	 *
 	 * @param $item
 	 *
 	 * @return float
@@ -107,6 +132,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Parse server from log item.
+	 *
 	 * @param $item
 	 *
 	 * @return string
@@ -117,6 +144,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Parse speed from log item.
+	 *
 	 * @param $item
 	 *
 	 * @return array
@@ -129,6 +158,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Add item statistics to hour statistics.
+	 *
 	 * @param $date
 	 * @param $speed_array
 	 */
@@ -139,6 +170,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Add item statistics to weekday statistics.
+	 *
 	 * @param $date
 	 * @param $speed_array
 	 */
@@ -149,6 +182,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Add server to server list.
+	 *
 	 * @param $server
 	 */
 	private function add_to_server_list($server) {
@@ -158,6 +193,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Prepare results table.
+	 *
 	 * @param $first_column
 	 *
 	 * @return \LucidFrame\Console\ConsoleTable
@@ -176,7 +213,7 @@ class Average_Speed {
 	}
 
 	/**
-	 *
+	 * Parse log file items.
 	 */
 	private function parse_items() {
 
@@ -207,6 +244,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Count items.
+	 *
 	 * @param $items
 	 *
 	 * @return int
@@ -216,6 +255,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get items.
+	 *
 	 * @return null
 	 */
 	public function get_items() {
@@ -223,6 +264,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get the first log item.
+	 *
 	 * @return mixed
 	 */
 	public function first_record_date() {
@@ -231,6 +274,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get the latest log item.
+	 *
 	 * @return mixed
 	 */
 	public function latest_record_date() {
@@ -239,6 +284,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get all servers included in the log file.
+	 *
 	 * @param bool $as_string
 	 * @param string $separator
 	 *
@@ -252,6 +299,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Format the speed value.
+	 *
 	 * @param $speed
 	 *
 	 * @return string
@@ -261,6 +310,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Flatten array based on a specific key.
+	 *
 	 * @param $key
 	 * @param $items
 	 *
@@ -271,6 +322,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Calculate average speed.
+	 *
 	 * @param $key
 	 * @param $items
 	 *
@@ -282,6 +335,7 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get average up/down speed.
 	 * @param array $items
 	 *
 	 * @return object
@@ -297,6 +351,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get minimum and maximum speed value.
+	 *
 	 * @param $key
 	 * @param $items
 	 *
@@ -311,6 +367,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Parse speed data by key.
+	 *
 	 * @param $key
 	 *
 	 * @return array
@@ -331,6 +389,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get items by hour.
+	 *
 	 * @return array
 	 */
 	public function get_items_by_hour() {
@@ -338,6 +398,8 @@ class Average_Speed {
 	}
 
 	/**
+	 * Get items by weekday.
+	 *
 	 * @return array
 	 */
 	public function get_items_by_weekday() {

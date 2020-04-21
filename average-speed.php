@@ -4,7 +4,10 @@
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/average-speed-class.php';
 
-$avgs = new Average_Speed(__DIR__ . '/speedtest.log');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$avgs = new Average_Speed(getenv('LOG_FILE_PATH'));
 
 echo '===== Average speed measurement calculation =====' . PHP_EOL;
 

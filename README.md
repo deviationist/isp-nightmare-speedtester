@@ -16,6 +16,8 @@ Be sure to have the Ookla Speedtest CLI installed. More details here: https://ww
 
 Also run ```composer install``` in the project root to pull in PHP dependencies.
 
+Copy ".env.example" to ".env" and specify the log file path.
+
 ### Cron setup
 The command below will run every 15 minute:<br>
 ```*/15 * * * * /path/to/speedtest.sh >> /path/to/speedtest.log```<br>
@@ -31,4 +33,3 @@ Make sure that the file is executable. If not then run:
 - CSV-export
 - Smarter storage - maybe in a SQLite-file instead?
 - A better way of generating statistics - maybe via SQL?
-- Add .env-based config so that the logfile can be placed anywhere
