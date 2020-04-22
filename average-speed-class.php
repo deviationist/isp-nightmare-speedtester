@@ -116,7 +116,7 @@ class Average_Speed {
 	 */
 	private function parse_download_speed($item) {
 		preg_match('/Download: (.*) Mbps/', $item, $matches);
-		return (float) ($matches[1]);
+		return isset($matches[1]) ? (float) $matches[1] : 0;
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Average_Speed {
 	 */
 	private function parse_upload_speed($item) {
 		preg_match('/Upload: (.*) Mbps/', $item, $matches);
-		return (float) trim($matches[1]);
+		return isset($matches[1]) ? (float) $matches[1] : 0;
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Average_Speed {
 	 */
 	private function parse_server($item) {
 		preg_match('/Server: (.*) -/', $item, $matches);
-		return trim($matches[1]);
+		return isset($matches[1]) ? trim($matches[1]) : false;
 	}
 
 	/**
@@ -187,7 +187,7 @@ class Average_Speed {
 	 * @param $server
 	 */
 	private function add_to_server_list($server) {
-		if ( ! in_array($server, $this->servers) ) {
+		if ( $server && ! in_array($server, $this->servers) ) {
 			$this->servers[] = $server;
 		}
 	}
